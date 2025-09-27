@@ -1,12 +1,13 @@
 
 import cors from "cors";
 import express from "express";
+import { UserRouter } from "./modules/user/user.routes";
 
 const app = express();
 
 // Middleware
-app.use(cors()); // Enables Cross-Origin Resource Sharing
-app.use(express.json()); // Parse incoming JSON requests
+app.use(cors());
+app.use(express.json()); 
 
 app.use(
   cors({
@@ -16,12 +17,10 @@ app.use(
 );
 
 
-// app.use("/api/v1/user", UserRouter)
-// app.use("/api/v1/post", PostRouter)
-// app.use("/api/v1/auth", AuthRouter)
+app.use("/api/v1/user", UserRouter)
 
 
-// Default route for testing
+
 app.get("/", (_req, res) => {
   res.send("API is running");
 });
