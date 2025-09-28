@@ -14,71 +14,47 @@ datasource db {
 }
 
 model User {
-  id         Int        @id @default(autoincrement())
-  name       String
-  email      String     @unique
-  password   String?
-  role       Role       @default(USER)
-  phone      String?
-  image    String?
-  status     UserStatus @default(ACTIVE)
-  isVerified Boolean    @default(false)
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  blogs       Blog[]
-  resumes Resume[]
-  refreshTokens RefreshToken[]
+  id           String         @id @default(uuid())
+  name         String?
+  email        String         @unique
+  password     String
+  role         Role           @default(ADMIN)
+  phone        String?
+  image        String?
+  status       UserStatus     @default(ACTIVE)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 }
 
 model Blog {
-  id         Int      @id @default(autoincrement())
-  title      String
-  slug      String @unique
-  summary String
-  content    String
-  thumbnail  String?
-  views      Int      @default(0)
-  published Boolean @default(false)
-  authorId   Int
-  author     User     @relation(fields: [authorId], references: [id])
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  summary   String?
+  content   String
+  thumbnail String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
 
 model Project {
-  id         Int      @id @default(autoincrement())
-  title      String
-  slug      String @unique
+  id          String      @id @default(uuid())
+  title       String
   description String?
   features    String[]
-  thumbnail  String?
-  liveUrl String?
-  repoUrl String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  thumbnail   String?
+  liveUrl     String?
+  repoUrl     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-model Resume {
-  id         Int      @id @default(autoincrement())
-  user     User?     @relation(fields: [userId], references: [id])
-  userId Int?
-  data Json
-  createdAt  DateTime @default(now())
-}
 
-model RefreshToken {
-  id Int  @id @default(autoincrement())
-  token String @unique
-  user User  @relation(fields: [userId], references: [id])
-  userId Int
-  expireAt DateTime
-  createdAt DateTime @default(now())
-}
 
 enum Role {
   ADMIN
-  USER
+  VIEWER
 }
 
 enum UserStatus {
@@ -86,4 +62,3 @@ enum UserStatus {
   INACTIVE
   BLOCKED
 }
-
