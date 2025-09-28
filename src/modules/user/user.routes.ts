@@ -1,10 +1,10 @@
-import app from "../../app";
+import { Router } from "express";
 import { UserController } from "./user.controller";
 
-let router = app
+let router = Router()
 
 
-app.use("/", UserController.createUser)
+router.use("/", UserController.createUser)
 
 export const UserRouter = router
 

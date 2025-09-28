@@ -14,32 +14,36 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(uuid())
-  name         String?
-  email        String         @unique
-  password     String
-  role         Role           @default(ADMIN)
-  phone        String?
-  image        String?
-  status       UserStatus     @default(ACTIVE)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id        String    @id @default(uuid())
+  name      String?
+  email     String    @unique
+  password  String
+  role      Role      @default(owner)
+  phone     String?
+  image     String?
+  status    String    @default("active")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  blogs     Blog[]
+  projects  Project[]
 }
 
 model Blog {
   id        String   @id @default(uuid())
   title     String
   slug      String   @unique
-  summary   String?
+  excerpt   String?
   content   String
   thumbnail String?
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  owner     User     @relation(fields: [ownerId], references: [id])
+  ownerId   String
 }
 
 model Project {
-  id          String      @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   description String?
   features    String[]
@@ -48,17 +52,11 @@ model Project {
   repoUrl     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     String
 }
-
-
 
 enum Role {
-  ADMIN
-  VIEWER
-}
-
-enum UserStatus {
-  ACTIVE
-  INACTIVE
-  BLOCKED
+  owner
+  viewer
 }
