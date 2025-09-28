@@ -4,7 +4,8 @@ import { ProjectController } from "./project.controller";
 let router = Router()
 
 
-router.use("/", ProjectController.createUser)
+router.post("/", ProjectController.createProject)
+router.get("/", ProjectController.getAllProjects)
 
 export const ProjectRouter = router
 
