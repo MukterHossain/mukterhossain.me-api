@@ -70,13 +70,32 @@ const updateProject = async(req:Request, res:Response) =>{
 
         res.status(200).json({
             success: true,
-            message: "Retrieved single project successfully",
+            message: "Updated single project successfully",
             data:result
         })
     } catch (error) {
         res.status(500).send({
             success: false,
-            message: `Failed to retrieve single project: ${error}`,
+            message: `Failed to update single project: ${error}`,
+        })
+    } 
+
+}
+const deleteProject = async(req:Request, res:Response) =>{
+    
+    try {
+        const result = await ProjectService.deleteProject(req.params.id)
+      
+
+        res.status(200).json({
+            success: true,
+            message: "Project deleted successfully",
+            data:result
+        })
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: `Failed to daata delete: ${error}`,
         })
     } 
 
@@ -87,5 +106,6 @@ export const ProjectController ={
     createProject,
     getAllProjects,
     getProjectById,
-    updateProject
+    updateProject,
+    deleteProject
 }
