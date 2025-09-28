@@ -6,6 +6,7 @@ let router = Router()
 
 
 router.post("/", BlogController.createBlog)
+router.get("/", BlogController.getAllBlogs)
 
 export const BlogRouter = router
 
