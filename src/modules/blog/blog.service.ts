@@ -91,6 +91,14 @@ const updateBlog = async (id: string, data:Partial<any>):Promise<Blog> => {
 
     return blog
 }
+const deleteBlog = async (id: string)=> {
+
+    const blog = await prisma.blog.delete({
+            where: { id }
+        })
+
+    return null
+}
 
 
 
@@ -98,5 +106,6 @@ export const BlogService = {
     createBlog,
     getAllBlogs,
     getBlogById,
-    updateBlog
+    updateBlog,
+    deleteBlog
 }
