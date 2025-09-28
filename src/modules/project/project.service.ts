@@ -72,11 +72,20 @@ const getProjectById = async (id:string) => {
     console.log(project)
     return {project}
 }
+const updateProject = async (id:string, payload:Prisma.ProjectUpdateInput):Promise<Project> => {
+    const project = await prisma.project.update({
+        where: {id},
+        data:payload
+        
+    })
+    return project
+}
 
 
 
 export const ProjectService = {
     createProject,
     getAllProjects,
-    getProjectById
+    getProjectById,
+    updateProject
 }
