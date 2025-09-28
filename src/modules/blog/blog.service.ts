@@ -56,10 +56,36 @@ return {
     }
 }
 }
+const getBlogById = async(id:string)=>{
+
+const blog = await prisma.blog.findUnique(
+    {where:{id},
+    select:{
+        id:true,
+        title:true,
+        slug:true,
+        content:true,
+        createdAt:true,
+        excerpt:true,
+        owner:{
+            select:{
+                name:true,
+                email:true,
+                image:true
+            }
+        }
+    }
+})
+
+return {
+    blog
+}
+}
 
 
 
 export const BlogService = {
     createBlog,
-    getAllBlogs
+    getAllBlogs,
+    getBlogById
 }

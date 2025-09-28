@@ -39,9 +39,27 @@ const getAllBlogs = async(req:Request, res:Response) =>{
     } 
 
 }
+const getBlogById = async(req:Request, res:Response) =>{
+      try {
+        
+        const result = await BlogService.getBlogById(req.params.id)
+        res.status(201).json({
+            success: true,
+            message: "Blog createdsuccessfully",
+            data:result
+        })
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: `Failed to create user: ${error}`,
+        })
+    } 
+
+}
 
 
 export const BlogController ={
     createBlog,
-    getAllBlogs
+    getAllBlogs,
+    getBlogById
 }
