@@ -1,9 +1,10 @@
 import { Request, Response } from "express";
-import { UserService } from "./user.service";
+import { ProjectService } from "./project.service";
+
 
 const createUser = async(req:Request, res:Response) =>{
       try {
-        const result = await UserService.createUser(req.body)
+        const result = await ProjectService.createUser(req.body)
         res.status(201).json({
             success: true,
             message: "User created successfully",
@@ -19,6 +20,6 @@ const createUser = async(req:Request, res:Response) =>{
 }
 
 
-export const UserController ={
+export const ProjectController ={
     createUser
 }

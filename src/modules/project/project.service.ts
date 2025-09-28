@@ -10,6 +10,6 @@ return createUser
 
 
 
-export const UserService = {
+export const ProjectService = {
     createUser
 }
