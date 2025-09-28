@@ -22,7 +22,7 @@ const getAllProjects = async ({ page = 1, limit = 10, search = ""}) => {
         ].filter(Boolean)
     }
 
-    const projects = await prisma.blog.findMany({
+    const projects = await prisma.project.findMany({
         skip,
         take: limit,
         where,
@@ -48,10 +48,35 @@ const getAllProjects = async ({ page = 1, limit = 10, search = ""}) => {
         }
     }
 }
+const getProjectById = async (id:string) => {
+    const project = await prisma.project.findUnique({
+        where: {id},
+        select:{
+            id:true,
+            title:true,
+            description:true,
+            features:true,
+            createdAt:true,
+            liveUrl:true,
+            repoUrl:true,
+            thumbnail:true,
+            owner: {
+                select: {
+                    name: true,
+                    email: true,
+                    image: true
+                }
+            }
+        }
+    })
+    console.log(project)
+    return {project}
+}
 
 
 
 export const ProjectService = {
     createProject,
-    getAllProjects
+    getAllProjects,
+    getProjectById
 }

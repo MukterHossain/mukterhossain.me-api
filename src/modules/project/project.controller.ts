@@ -27,13 +27,37 @@ const getAllProjects = async(req:Request, res:Response) =>{
         const result = await ProjectService.getAllProjects({page, limit, search})
         res.status(201).json({
             success: true,
-            message: "Project created successfully",
+            message: "Project data retrieved  successfully",
             data:result
         })
     } catch (error) {
         res.status(500).send({
             success: false,
-            message: `Failed to create project: ${error}`,
+            message: `Failed to project data retrieve: ${error}`,
+        })
+    } 
+
+}
+const getProjectById = async(req:Request, res:Response) =>{
+    console.log("get id", req.params.id)
+    try {
+        const result = await ProjectService.getProjectById(req.params.id)
+        if(!result.project){
+            return res.status(404).json({
+                success:false,
+                message: "Project not found"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Retrieved single project successfully",
+            data:result
+        })
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: `Failed to retrieve single project: ${error}`,
         })
     } 
 
@@ -42,5 +66,6 @@ const getAllProjects = async(req:Request, res:Response) =>{
 
 export const ProjectController ={
     createProject,
-    getAllProjects
+    getAllProjects,
+    getProjectById
 }
