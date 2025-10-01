@@ -21,8 +21,27 @@ const createUser = async(req:Request, res:Response) =>{
     } 
 
 }
+const getUser = async(req:Request, res:Response) =>{
+      try {
+        const email = req.params.email as string;
+        const {user} = await AuthService.getUser(email)
+        
+        res.status(200).json({
+            success: true,
+            message: "User data successfully",
+            user
+        })
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: `Failed to user data: ${error}`,
+        })
+    } 
+
+}
 
 
 export const AuthController ={
-    createUser
+    createUser,
+    getUser
 }

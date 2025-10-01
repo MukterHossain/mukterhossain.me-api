@@ -69,7 +69,7 @@ const getProjectById = async (id:string) => {
             }
         }
     })
-    console.log(project)
+    // console.log(project)
     return {project}
 }
 const updateProject = async (id:string, payload:Prisma.ProjectUpdateInput):Promise<Project> => {
