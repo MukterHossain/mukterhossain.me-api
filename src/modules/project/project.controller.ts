@@ -63,9 +63,15 @@ const getProjectById = async(req:Request, res:Response) =>{
 
 }
 const updateProject = async(req:Request, res:Response) =>{
-    
+    const {id} = req.params
+        if(!id){
+            return res.status(400).json({
+                success: false,
+                message: "Project id is required"
+            })
+        }
     try {
-        const result = await ProjectService.updateProject(req.params.id, req.body)
+        const result = await ProjectService.updateProject(id, req.body)
       
 
         res.status(200).json({

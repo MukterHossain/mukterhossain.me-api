@@ -37,9 +37,15 @@ const getAllBlogs = async ({ page = 1, limit = 10, search = "", slug = "" }) => 
         include: {
             owner: {
                 select: {
+                    id: true,
                     name: true,
                     email: true,
-                    image: true
+                    image: true,
+                    phone: true,
+                    role: true,
+                    status: true,
+                    createdAt: true,
+                    updatedAt: true
                 }
             }
         },
@@ -66,13 +72,22 @@ const getBlogById = async (id: string) => {
                 title: true,
                 slug: true,
                 content: true,
+                thumbnail: true,
+                published: true,
                 createdAt: true,
                 excerpt: true,
+                updatedAt: true,
                 owner: {
                     select: {
+                        id: true,
                         name: true,
                         email: true,
-                        image: true
+                        image: true,
+                        phone: true,
+                        role: true,
+                        status: true,
+                        createdAt: true,
+                        updatedAt: true
                     }
                 }
             }
@@ -82,20 +97,20 @@ const getBlogById = async (id: string) => {
         blog
     }
 }
-const updateBlog = async (id: string, data:Partial<any>):Promise<Blog> => {
+const updateBlog = async (id: string, data: Partial<any>): Promise<Blog> => {
 
     const blog = await prisma.blog.update({
-            where: { id },
-            data
-        })
+        where: { id },
+        data
+    })
 
     return blog
 }
-const deleteBlog = async (id: string)=> {
+const deleteBlog = async (id: string) => {
 
     const blog = await prisma.blog.delete({
-            where: { id }
-        })
+        where: { id }
+    })
 
     return null
 }

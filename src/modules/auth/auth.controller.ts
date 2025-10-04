@@ -39,9 +39,34 @@ const getUser = async(req:Request, res:Response) =>{
     } 
 
 }
+const getDashboardData = async(req:Request, res:Response) =>{
+      try {
+        const ownerId = req.params.ownerId as string;
+        if(!ownerId){
+            res.status(400).json({
+                success: false,
+                message: "OwnerId is required",
+            })
+        }
+        const dashboardData = await AuthService.getDashboardData(ownerId)
+        
+        res.status(200).json({
+            success: true,
+            message: "Dashboard data fetched successfully",
+            dashboardData
+        })
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: `Failed to user data: ${error}`,
+        })
+    } 
+
+}
 
 
 export const AuthController ={
     createUser,
-    getUser
+    getUser,
+    getDashboardData
 }

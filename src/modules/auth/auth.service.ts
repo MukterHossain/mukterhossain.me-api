@@ -8,6 +8,7 @@ const loginUser = async(email:string, password:string) =>{
     select:{
         id:true,
         email:true,
+        name:true,
         role:true,
         phone:true,
         image:true,
@@ -64,10 +65,38 @@ return {
     user: withoutpassword,
 }
 }
+const getDashboardData = async(ownerId:string) =>{
+    const totalBlogs = await prisma.blog.count({where:{ownerId}});
+    const publishedBlogs = await prisma.blog.count({where:{ownerId, published:true}});
+    const totalProjects = await prisma.project.count({where:{ownerId}});
+    const recentBlogs = await prisma.blog.findMany({
+        where:{ownerId},
+        orderBy:{createdAt:"desc"},
+        take:5,
+    })
+    const recentProjects = await prisma.project.findMany({
+        where:{ownerId},
+        orderBy:{createdAt:"desc"},
+        take:5,
+    })
+   
+
+
+return {
+    stats:{
+        totalBlogs,
+        publishedBlogs,
+        totalProjects,
+    },
+    recentBlogs,
+    recentProjects
+}
+}
 
 
 
 export const AuthService = {
     loginUser,
-    getUser
+    getUser,
+    getDashboardData
 }

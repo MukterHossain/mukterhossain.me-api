@@ -58,8 +58,15 @@ const getBlogById = async(req:Request, res:Response) =>{
 }
 const updateBlog = async(req:Request, res:Response) =>{
       try {
+        const {id} = req.params
+        if(!id){
+            return res.status(400).json({
+                success: false,
+                message: "Blog id is required"
+            })
+        }
         
-        const result = await BlogService.updateBlog(req.params.id, req.body)
+        const result = await BlogService.updateBlog(id, req.body)
         res.status(201).json({
             success: true,
             message: "Blog data updated successfully",
