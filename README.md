@@ -1,6 +1,6 @@
 # 🌐 Personal Portfolio Website API
 
-A full-stack **portfolio website** built with **Next.js**, **Express.js**, **Node.js**, **Typescript** and **Prisma**, designed to showcase blog, projects, and personal information — with a secure owner dashboard for content management.
+A full-stack **portfolio website** built with **Next.js**, **Express.js**, **Typescript** and **Prisma**, designed to showcase blog, projects, and personal information — with a secure owner dashboard for content management.
 
 --
 

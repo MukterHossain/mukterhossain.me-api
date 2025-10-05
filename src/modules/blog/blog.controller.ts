@@ -1,6 +1,7 @@
 
 import { Request, Response } from "express";
 import { BlogService } from "./blog.service";
+import { Prisma } from "@prisma/client";
 
 
 const createBlog = async(req:Request, res:Response) =>{
@@ -59,6 +60,7 @@ const getBlogById = async(req:Request, res:Response) =>{
 const updateBlog = async(req:Request, res:Response) =>{
       try {
         const {id} = req.params
+        const data = req.body;
         if(!id){
             return res.status(400).json({
                 success: false,
@@ -66,13 +68,19 @@ const updateBlog = async(req:Request, res:Response) =>{
             })
         }
         
-        const result = await BlogService.updateBlog(id, req.body)
+        const result = await BlogService.updateBlog(id, data)
         res.status(201).json({
             success: true,
             message: "Blog data updated successfully",
             data:result
         })
     } catch (error) {
+        if(error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025"){
+            return res.status(404).json({
+                success: false,
+                message: "Slug already exists. Please use a different slug"
+            })
+        }
         res.status(500).send({
             success: false,
             message: `Failed to blog data: ${error}`,
